@@ -1,3 +1,5 @@
 public class Palpite {
-    public Partida Partida;
+    int TimeVencedor;
+    int Fichas;    
+    int partidaId;
 }

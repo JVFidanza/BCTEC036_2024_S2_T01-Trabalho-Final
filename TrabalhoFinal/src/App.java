@@ -35,20 +35,54 @@ public class App {
         int partidaIndex = 0;
 
         //criação das partidas
+        int indexGeralPartidas = 0;
         for(int indexExt = 0; indexExt < numeroDeTimes; indexExt++){
             for(int indexInt = indexExt + 1; indexInt < numeroDeTimes; indexInt++){
                 Partida partida = new Partida();
                 partida.Time1 = times[indexExt];
                 partida.Time2 = times[indexInt];
+                partida.Id = indexGeralPartidas;
                 partidas[partidaIndex] = partida;
                 partidaIndex++;
+                indexGeralPartidas++;
             }
         }
 
-        System.out.println("Palpites para o jogador " + jogador1.Nome + ":");
+        InserirPalpites(jogador1, partidas, console);
+        InserirPalpites(jogador2, partidas, console);
+
+        
+
+    }
+    public static void InserirPalpites(Jogador jogador, Partida[] partidas, Console console) throws Exception{
+        System.out.println("Palpites para o jogador " + jogador.Nome + ":");
 
         for(Partida partida : partidas){
-            console.readLine("Palpite para a partida: 1 - " + partida.Time1.Nome + " x 2 - " + partida.Time2.Nome);
+            System.out.println("Palpite para a partida: 1 - " + partida.Time1.Nome + " x 2 - " + partida.Time2.Nome);
+            String timeVencedorString = console.readLine("Insira o número do time vencedor: ");
+            int timeVencedor = Integer.valueOf(timeVencedorString);
+
+            if(timeVencedor != 1 && timeVencedor != 2){
+                throw new Exception("Número deve ser 1 ou 2");
+            }
+            Palpite palpite = new Palpite();
+            palpite.TimeVencedor = Integer.valueOf(timeVencedor);
+            boolean continueFichas = true;
+            int fichas = 0;
+            while(continueFichas){
+                System.out.println("Ficas restantes: " + jogador.Fichas);
+                String fichasString = console.readLine("Insira o número de fichas: ");
+                fichas = Integer.valueOf(fichasString);
+                if(fichas > jogador.Fichas){
+                    System.out.println("Jogador não possui fichas suficientes!");
+                }
+                else
+                    continueFichas = false;
+            }
+            palpite.Fichas = fichas;
+            palpite.partidaId = partida.Id;
+            jogador.Fichas = jogador.Fichas - fichas; 
+            jogador.Palpites.add(palpite);
         }
     }
 }
