@@ -95,7 +95,15 @@ public class App {
         PrintLineSeparator();
         System.out.println("Palpites do jogador " + jogador1.Nome + ":");
         for(Palpite palpite : jogador1.Palpites){
-            System.out.println("Time: " + palpite.TimeVencedor);
+            System.out.println("Time: " + palpite.NomeTimeVencedor);
+            System.out.println("Fichas: " + palpite.Fichas);
+            System.out.println("*********");
+        }
+
+        PrintLineSeparator();
+        System.out.println("Palpites do jogador " + jogador2.Nome + ":");
+        for(Palpite palpite : jogador2.Palpites){
+            System.out.println("Time: " + palpite.NomeTimeVencedor);
             System.out.println("Fichas: " + palpite.Fichas);
             System.out.println("*********");
         }
@@ -131,10 +139,14 @@ public class App {
             }
             Palpite palpite = new Palpite();
             palpite.TimeVencedor = Integer.valueOf(timeVencedor);
+            if(timeVencedor == 1)
+                palpite.NomeTimeVencedor = partida.Time1.Nome;
+            else
+            palpite.NomeTimeVencedor = partida.Time2.Nome;
             boolean continueFichas = true;
             int fichas = 0;
             while(continueFichas){
-                System.out.println("Ficas restantes: " + jogador.Fichas);
+                System.out.println("Fichas restantes: " + jogador.Fichas);
                 String fichasString = console.readLine("Insira o número de fichas: ");
                 fichas = Integer.valueOf(fichasString);
                 if(fichas > jogador.Fichas){
